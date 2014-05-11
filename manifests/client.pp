@@ -38,8 +38,7 @@ class rsyslog::client (
   $remote_servers     = false,
   $ssl_ca             = undef,
   $log_templates      = false,
-  $actionfiletemplate = false,
-  $preserve_fqdn      = false
+  $actionfiletemplate = false
 ) inherits rsyslog {
 
   $content_real = $custom_config ? {
@@ -47,7 +46,7 @@ class rsyslog::client (
     default => template($custom_config),
   }
 
-  rsyslog::snippet {'client':
+  rsyslog::snippet { $rsyslog::client_conf:
     ensure  => present,
     content => $content_real,
   }
